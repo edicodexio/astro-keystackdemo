@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const formatDate = (date: Date) =>
+	date.toLocaleDateString('bg-BG', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	});
+---
+
+<BaseLayout title="Astro + Keystatic — Демо блог">
+	<section class="hero container">
+		<h1>Блог с 5 статии</h1>
+		<p>
+			Статичен Astro сайт с Keystatic за редакция. Натисни „Редактор“ за да промениш
+			съдържанието без да пипаш код.
+		</p>
+	</section>
+
+	<section class="post-grid container">
+		{
+			posts.map((post) => (
+				<article class="post-card">
+					<p class="post-meta">{formatDate(post.data.date)}</p>
+					<h2>
+						<a href={`/posts/${post.id}`}>{post.data.title}</a>
+					</h2>
+					<p class="post-excerpt">{post.data.excerpt}</p>
+				</article>
+			))
+		}
+	</section>
+</BaseLayout>

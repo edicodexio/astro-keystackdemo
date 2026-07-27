@@ -1,0 +1,25 @@
+---
+title: Git като CMS backend
+date: 2025-07-15
+excerpt: Когато съдържанието живее в Git, получавате version history, code review и автоматичен deploy без допълнителни системи.
+---
+
+Идеята зад Keystatic е елегантна: **Git repository-то е вашата база данни**.
+
+## Какво печелите?
+
+- **Version history** — всяка промяна е commit, можете да видите кой какво е променил
+- **Rollback** — грешна редакция? `git revert` и сте готови
+- **Review process** — pull request преди публикуване, ако искате
+- **Backup** — GitHub/GitLab пазят копията ви
+
+## Сравнение с традиционен CMS
+
+| | WordPress | Keystatic + Git |
+|---|---|---|
+| Хостване | Сървър + DB | Статичен CDN |
+| Редакция | Admin panel | Keystatic UI |
+| Данни | MySQL | `.mdoc` файлове |
+| Vendor lock-in | Висок | Нулев |
+
+За малък екип или solo проект това е огромно опростяване — един repo, един deploy pipeline, нула инфраструктура за поддръжка.

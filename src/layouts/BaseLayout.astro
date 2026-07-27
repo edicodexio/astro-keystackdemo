@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = 'Статичен блог с Astro и Keystatic' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="bg">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="container">
+				<a class="logo" href="/">Astro + Keystatic</a>
+				<nav class="nav">
+					<a href="/" class:list={{ active: Astro.url.pathname === '/' }}>Начало</a>
+					<a href="/keystatic" class="cms-link">Редактор →</a>
+				</nav>
+			</div>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<p>Демо сайт — съдържанието се управлява от Keystatic и се пази като файлове в Git.</p>
+			</div>
+		</footer>
+	</body>
+</html>

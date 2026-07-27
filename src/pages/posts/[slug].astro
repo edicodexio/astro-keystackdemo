@@ -1,0 +1,40 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+	}));
+}
+
+const { slug } = Astro.params;
+const post = await getEntry('posts', slug!);
+
+if (!post) {
+	return Astro.redirect('/');
+}
+
+const { Content } = await render(post);
+
+const formatDate = (date: Date) =>
+	date.toLocaleDateString('bg-BG', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	});
+---
+
+<BaseLayout title={`${post.data.title} — Astro + Keystatic`} description={post.data.excerpt}>
+	<article class="article container">
+		<a class="back-link" href="/">← Обратно към статиите</a>
+		<header class="article-header">
+			<p class="post-meta">{formatDate(post.data.date)}</p>
+			<h1>{post.data.title}</h1>
+		</header>
+		<div class="article-content">
+			<Content />
+		</div>
+	</article>
+</BaseLayout>
