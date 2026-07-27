@@ -18,7 +18,20 @@ export default config({
 					label: 'Кратко описание',
 					multiline: true,
 				}),
-				content: fields.markdoc({ label: 'Съдържание' }),
+				cover: fields.image({
+					label: 'Cover снимка',
+					directory: 'src/assets/images/posts',
+					publicPath: '@assets/images/posts/',
+				}),
+				content: fields.markdoc({
+					label: 'Съдържание',
+					options: {
+						image: {
+							directory: 'src/assets/images/posts',
+							publicPath: '/src/assets/images/posts/',
+						},
+					},
+				}),
 			},
 		}),
 	},

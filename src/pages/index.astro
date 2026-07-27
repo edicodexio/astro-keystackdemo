@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -18,8 +19,8 @@ const formatDate = (date: Date) =>
 	<section class="hero container">
 		<h1>Блог с 5 статии</h1>
 		<p>
-			Статичен Astro сайт с Keystatic за редакция. Отвори редактора на
-			<a href="http://127.0.0.1:4321/keystatic">127.0.0.1:4321/keystatic</a>.
+			Статичен Astro сайт с Keystatic за редакция. Отвори
+			<a href="/keystatic">редактора</a> за да добавиш снимки и текст.
 		</p>
 	</section>
 
@@ -27,11 +28,24 @@ const formatDate = (date: Date) =>
 		{
 			posts.map((post) => (
 				<article class="post-card">
-					<p class="post-meta">{formatDate(post.data.date)}</p>
-					<h2>
-						<a href={`/posts/${post.id}`}>{post.data.title}</a>
-					</h2>
-					<p class="post-excerpt">{post.data.excerpt}</p>
+					{post.data.cover && (
+						<a class="post-card-cover" href={`/posts/${post.id}`}>
+							<Image
+								src={post.data.cover}
+								alt={post.data.title}
+								width={800}
+								height={450}
+								loading="lazy"
+							/>
+						</a>
+					)}
+					<div class="post-card-body">
+						<p class="post-meta">{formatDate(post.data.date)}</p>
+						<h2>
+							<a href={`/posts/${post.id}`}>{post.data.title}</a>
+						</h2>
+						<p class="post-excerpt">{post.data.excerpt}</p>
+					</div>
 				</article>
 			))
 		}

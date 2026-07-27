@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -32,6 +33,17 @@ const formatDate = (date: Date) =>
 		<header class="article-header">
 			<p class="post-meta">{formatDate(post.data.date)}</p>
 			<h1>{post.data.title}</h1>
+			{post.data.cover && (
+				<div class="article-cover">
+					<Image
+						src={post.data.cover}
+						alt={post.data.title}
+						width={960}
+						height={540}
+						loading="eager"
+					/>
+				</div>
+			)}
 		</header>
 		<div class="article-content">
 			<Content />
